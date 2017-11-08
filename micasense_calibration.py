@@ -33,8 +33,8 @@ if os.name == 'nt': # MS Windows
     exiftoolPath = 'C:/exiftool/exiftool.exe'
 
 
-def radrefl_factor(panel_cal, image_name=None, plot_steps=False, cal_model=None,
-		return_date=False):
+def radrefl_factor(panel_cal, image_name=None, plot_steps=False, 
+		cal_model_fn=None, return_date=False):
 	""" Compute radiance-reflectance factor for a RedEdge band from panel.
 
 	Uses photo of calibrated reflectance panel acquired in band of interest to
@@ -69,8 +69,6 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False, cal_model=None,
 		root.withdraw()
 		image_name = filedialog.askopenfilename()
 
-	print(image_name)
-
 	# Read raw image DN values
 	# reads 16 bit tif - this will likely not work for 12 bit images
 	imageRaw = plt.imread(image_name)
@@ -83,7 +81,7 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False, cal_model=None,
 		fig = plotutils.plotwithcolorbar(imageRaw, title='Raw image values with colorbar')
 
 	# Load metadata
-	meta = metadata.Metadata(image_name, exiftoolPath=exiftoolPath)
+	meta = load_metadata(image_name)
 	cameraMake = meta.get_item('EXIF:Make')
 	cameraModel = meta.get_item('EXIF:Model')
 	bandName = meta.get_item('XMP:BandName')
@@ -101,7 +99,7 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False, cal_model=None,
 			raise ValueError
 	
 	# Add calibration data to metadata if required.
-	if cal_model != None:
+	if cal_model_fn != None:
 		print('WARNING: Using user-provided calibration model data.')
 		meta = add_cal_metadata(meta, cal_model_fn)
 	else:
@@ -162,6 +160,13 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False, cal_model=None,
 		return radianceToReflectance, create_date
 	else:
 		return radianceToReflectance
+
+
+
+def load_metadata(image_name):
+	""" Wrapper to return metadata from exiftool """
+	meta = metadata.Metadata(image_name, exiftoolPath=exiftoolPath)
+	return meta
 
 
 

@@ -8,6 +8,8 @@ Place micasense repository (https://github.com/micasense/imageprocessing) on `PY
 
 And install `pyexiftools` as per micasense instructions.
 
+Need piexif: http://piexif.readthedocs.io/en/latest/installation.html
+
 
 ## Workflow
 
@@ -21,7 +23,7 @@ A CSV file containing panel reflectance factor data for your particular panel. Y
 
 https://support.micasense.com/hc/en-us/articles/224590508-Where-can-I-find-reflectance-values-for-my-panels
 
-The CSV file must have columns of 'band' and 'factor'. Each row must contain the factor for each band. Each band must use the name specified in the RedEdge image metadata.
+The CSV file must have columns of 'band' and 'factor'. Each row must contain the factor for each band. Each band must use the name specified in the RedEdge image metadata. See the example file provided in this repository.
 
 
 ### Camera Calibration Model
@@ -30,10 +32,10 @@ Only relevant if using a RedEdge camera with firmware version < 2.1.0. In newer 
 
 The file must contain the following:
 
-[Model]
-RadiometricCalibration=
-VignettingPolynomial=
-VignettingCenter=
-PerspectiveDistortion=
-PerspectiveFocalLength=
+    [Model]
+    RadiometricCalibration=
+    VignettingPolynomial=
+    VignettingCenter=
+    PerspectiveDistortion=
+    PerspectiveFocalLength=
 
