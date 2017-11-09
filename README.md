@@ -17,6 +17,8 @@ Place the MicaSense Image Processsing repository (<https://github.com/micasense/
 
 You must also install `exiftool` and `pyexiftool` as specified in <https://micasense.github.io/imageprocessing/MicaSense%20Image%20Processing%20Setup.html.>
 
+Finally, consider adding the path to this repository to your system `$PATH` so that you can use the scripts directly regardless of your present working directory.
+
 
 ## Supplementary files needed
 
@@ -77,6 +79,31 @@ The images saved to `refl/` are then ready to be imported to AgiSoft PhotoScan.
 ## Format of output files
 
 16-bit TIFFs, with all original EXIF metadata attached. Values saved as reflectance (floating-point), so they will appear blank in most software, but PhotoScan does understand them.
+
+
+## Example
+
+This example uses the `data/` folder provided as part of the MicaSense Image Processing repository.
+
+The panel calibration values for the panel used in the MicaSense example data are in `panel_example_ds.csv`.
+
+Note in this example that only the pre-flight reflectance panel images are available, so we will use them twice in order to imitate panels being available pre- and post-flight.
+
+    export PATH=$PATH:path/to/this/repository
+    cd path/to/micasense/imageprocessing/data
+    mkdir raw
+    mkdir refl
+    mv 0000SET raw/
+    calc_rad2refl.py path/to/this/repository/panel_example_ds.csv raw/0000SET/000/IMG_0000_ raw/0000SET/000/IMG_0000_ .
+    process_flight_images.py .
+
+(N.b. the `.` signifies 'the current working directory').
+
+This will result in reflectance images being written to `./refl/*`.
+
+
+
+
 
 
 
