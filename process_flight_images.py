@@ -3,10 +3,7 @@
 Driver script for a flight bounded by reflectance panels pre- and post-flight.
 """
 
-import statsmodels.api as sm
 import matplotlib.pyplot as plt
-from PIL import Image
-import piexif
 import pandas as pd
 import glob
 from libtiff import TIFFimage
@@ -15,7 +12,6 @@ import argparse
 import os
 import datetime as dt
 
-import micasense.utils as msutils
 import micasense_calibration as mc
 
 parser = argparse.ArgumentParser('Calibrate and correct all RedEdge images \
