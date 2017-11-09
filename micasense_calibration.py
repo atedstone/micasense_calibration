@@ -86,14 +86,9 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False,
 	cameraModel = meta.get_item('EXIF:Model')
 	bandName = meta.get_item('XMP:BandName')
 
-	# Check firmware version
-	firmwareVersion = meta.get_item('EXIF:Software')
-	print('{0} {1} firmware version: {2}'.format(cameraMake, 
-                                             cameraModel, 
-                                             firmwareVersion))
-	# Extract major [0], minor [1] and point [2] versions
-	ver = [i for i in firmwareVersion[1:].split('.')]
-	if int(ver[0]) < 2 and int(ver[1] < 1):
+	# Prevent processing from continuing if firmware version too low and
+	# no user-provided calibration data.
+	if not check_firmware_version(meta):
 		if cal_model_fn == None:
 			print('Firmware version < 2.1.0 and no calibration model data provided.')
 			raise ValueError
@@ -187,6 +182,42 @@ def load_panel_factors(panel_cal_fn):
 	panel_cal = pd.read_csv(panel_cal_fn, index_col='band').squeeze()
 	panel_cal.name = panel_cal_fn
 	return panel_cal
+
+
+
+def check_firmware_version(meta, return_values=False, verbose=False):
+	""" Check RedEdge firmware version - returns True if >= 2.1.0.
+
+	:param meta: metadata for image to check
+	:type meta: metadata.Metadata
+	:param return_values: If True, return major/minor/point values of firmware
+		version as a list in location [1] of returned tuple.
+	:type return_values: bool
+	:param verbose: If True print firmware version
+	:type verbose: bool
+
+	:returns: True if >= 2.1.0, otherwise False. If return_values=True then 
+		returns tuple (True/False, firmware_version)
+	:rtype: bool, tuple
+
+	"""
+
+	firmwareVersion = meta.get_item('EXIF:Software')
+	if verbose:
+		print('{0} {1} firmware version: {2}'.format(cameraMake, 
+                                             cameraModel, 
+                                             firmwareVersion))
+	# Extract major [0], minor [1] and point [2] versions
+	ver = [i for i in firmwareVersion[1:].split('.')]
+	if int(ver[0]) < 2 and int(ver[1] < 1):
+		val = False
+	else:
+		val = True
+
+	if return_values:
+		return (val, ver)
+	else:
+		return val
 
 
 
