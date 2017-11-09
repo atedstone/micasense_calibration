@@ -18,8 +18,12 @@ import datetime as dt
 import sys
 import configparser
 
-import tkinter as tk
-from tkinter import filedialog
+try:
+	import tkinter as tk
+	from tkinter import filedialog
+except ImportError:
+	print('WARNING: tkinter not present on your system. You will have to \
+		supply a file name manually if calling radrefl_factor.')
 
 import micasense.plotutils as plotutils
 import micasense.metadata as metadata
@@ -275,5 +279,5 @@ def calibrate_correct_image(raw_image, meta, rad2refl_factor):
 	fl_im_rad, _, _, _ = msutils.raw_image_to_radiance(meta, raw_image)
 	fl_im_refl = fl_im_rad * rad2refl_factor
 	fl_im_refl_cor = msutils.correct_lens_distortion(meta, fl_im_refl)
-	
+
 	return fl_im_refl_cor
