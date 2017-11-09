@@ -251,3 +251,29 @@ def add_cal_metadata(image_meta, camera_model_fn):
 
 	params = None
 	return image_meta
+
+
+
+def calibrate_correct_image(raw_image, meta, rad2refl_factor):
+	""" Calibrate and correct a raw image to reflectance.
+
+	This function converts raw values to radiance, then applies radiance
+	to reflectance conversion factor, and finally corrects for lens distortion.
+
+	:param raw_image: the raw image to correct
+	:type raw_image: np.array
+	:param meta: metadata corresponding with image to correct
+	:type meta: metadata.Metadata
+	:param rad2refl_factor: conversion/scaling factor radiance->reflectance
+	:type rad2refl_factor: float
+
+	:returns: corrected image
+	:rtype: np.array
+
+	"""
+
+	fl_im_rad, _, _, _ = msutils.raw_image_to_radiance(meta, raw_image)
+	fl_im_refl = fl_im_rad * rad2refl_factor
+	fl_im_refl_cor = msutils.correct_lens_distortion(meta, fl_im_refl)
+	
+	return fl_im_refl_cor
