@@ -47,7 +47,7 @@ for dirpath, dirnames, filenames in os.walk(args.flight_loc + 'raw/'):
 n = 1
 total_im = len(images)
 for fl_im_name in images:
-	print('%s / %s' %(n, total_im))
+	print('%s / %s (%s)' %(n, total_im, fl_im_name))
 
 	# Load image and metadata
 	fl_im_raw = plt.imread(fl_im_name)
@@ -55,7 +55,7 @@ for fl_im_name in images:
 
 	# Add calibration model metadata
 	if not mc.check_firmware_version(meta):
-		meta = mc.add_cal_metadata(meta, cal_model_fn)
+		meta = mc.add_cal_metadata(meta, args.cal_model_fn)
 
 	band = meta.get_item('XMP:BandName')
 	acq_time = dt.datetime.strptime(meta.get_item('EXIF:CreateDate'),
