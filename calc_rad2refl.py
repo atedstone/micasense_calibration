@@ -47,7 +47,7 @@ print('Processing pre-flight images')
 print('.....................................................................')
 factors1 = []
 for n in range(1, 6):
-	fn = args.p_pre + str(n) + '.tif'
+	fn = args.flight_loc + args.p_pre + str(n) + '.tif'
 	print('Handling %s' %fn)
 	f, date1 = mc.radrefl_factor(panel_factors, image_name=fn, 
 		cal_model_fn=args.cal_model_fn,
@@ -61,7 +61,7 @@ print('Processing post-flight images')
 print('.....................................................................')
 factors2 = []
 for n in range(1, 6):
-	fn = args.p_post + str(n) + '.tif'
+	fn = args.flight_loc + args.p_post + str(n) + '.tif'
 	print('Handling %s' %fn)
 	f, date2 = mc.radrefl_factor(panel_factors, image_name=fn, 
 		cal_model_fn=args.cal_model_fn,
