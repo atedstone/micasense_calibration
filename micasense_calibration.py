@@ -213,7 +213,7 @@ def check_firmware_version(meta, return_values=False, verbose=False):
                                              firmwareVersion))
 	# Extract major [0], minor [1] and point [2] versions
 	ver = [i for i in firmwareVersion[1:].split('.')]
-	if int(ver[0]) < 2 and int(ver[1] < 1):
+	if (int(ver[0]) <= 2) and (int(ver[1]) < 1):
 		val = False
 	else:
 		val = True
@@ -243,15 +243,16 @@ def add_cal_metadata(image_meta, camera_model_fn):
 	"""
 
 	params = configparser.ConfigParser()
+	params.optionxform = str
 	params.read_file(open(camera_model_fn))
 
 	for item in params.items('Model'):
 		split_items = item[1].split(',') 
 		if len(split_items) > 1:
-			param = [float(i.strip()) for i in item]
+		 	param = [float(i.strip()) for i in split_items]
 		else:
-			param = items[1]
-		image_meta.exif[item[0]] = item[1]
+			param = item[1]
+		image_meta.exif['XMP:'+item[0]] = param
 
 	params = None
 	return image_meta
