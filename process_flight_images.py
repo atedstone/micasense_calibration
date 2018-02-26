@@ -73,7 +73,7 @@ for fl_im_name in images:
 	fl_im_refl_cor = mc.calibrate_correct_image(fl_im_raw, meta, rad2refl)
 
 	# Create a tiff structure from image data
-	tiff = TIFFimage(fl_im_refl_cor, description='')
+	tiff = TIFFimage(fl_im_refl_cor, 'reflectance')
 	filename = args.flight_loc + 'refl/' + fl_im_name.split(args.flight_loc + 'raw/')[1]
 	tiff.write_file(filename, compression='none') # or 'lzw'
 	del tiff # flushes data to disk
