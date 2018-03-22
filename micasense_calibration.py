@@ -279,6 +279,6 @@ def calibrate_correct_image(raw_image, meta, rad2refl_factor):
 
 	fl_im_rad, _, _, _ = msutils.raw_image_to_radiance(meta, raw_image)
 	fl_im_refl = fl_im_rad * rad2refl_factor
-	fl_im_refl_cor = msutils.correct_lens_distortion(meta, fl_im_refl)
+	#fl_im_refl_cor = msutils.correct_lens_distortion(meta, fl_im_refl)
 
-	return fl_im_refl_cor
+	return fl_im_refl
