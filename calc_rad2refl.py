@@ -11,6 +11,9 @@ e.g. calc_rad2refl.py /scratch/rededge_calibration/panel_RP02-1603157-SC.csv /sc
 Andrew Tedstone (a.j.tedstone@bristol.ac.uk), November 2017
 
 """
+import matplotlib
+matplotlib.use('TkAgg')
+matplotlib.rcParams['interactive'] = True
 
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
@@ -40,6 +43,8 @@ parser.add_argument('-calmodel', dest='cal_model_fn', default=None, type=str,
 args = parser.parse_args()
 
 panel_factors = mc.load_panel_factors(args.panel)
+
+print('Interactive? %s' %(plt.isinteractive()))
 
 
 # Calculate factors at start of flight
