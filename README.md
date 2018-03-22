@@ -70,7 +70,7 @@ Arrange your working environment as follows:
 
 Processing for each UAV flight then consists of two steps (undertaken on your system command line):
 
-1. Run `calc_rad2refl.py <panel_file> <pre_flight_images> <post_flight_images> <flight_directory>`. This is an interactive script which generates a CSV file of radiance-reflectance parameters, stored in your flight directory. It will display each band of each of the two sets of reflectance panel images one-by-one, and will ask you to click first the top-left then the bottom-right of the panel region in each image.
+1. Run `calc_rad2refl.py <panel_file> <pre_flight_images> <post_flight_images> <flight_directory>`. This is an interactive script which generates a CSV file of radiance-reflectance parameters, stored in your flight directory. It will display each band of each of the two sets of reflectance panel images one-by-one, and will ask you to click first the top-left then the bottom-right of the panel region in each image. Format of pre_ and post_flight_image filenames: '/scratch/SET/IMG_0000_'.
 2. Run `process_flight_images.py <flight_directory>`. This script applies the radiance-reflectance parameters generated in Step 1 to a whole flight of images. This script can be run unattended.
 
 The images saved to `refl/` are then ready to be imported to AgiSoft PhotoScan.
