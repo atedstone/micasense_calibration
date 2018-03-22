@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """
 Use after process_flight_images.py
 Call with path to the flight, e.g. 
@@ -10,7 +11,7 @@ import sys
 
 path_in = sys.argv[1]
 
-images = glob.glob(path + '/refl/**/*.tif', recursive=True)
+images = glob.glob(path_in + '/refl/**/*.tif', recursive=True)
 
 # Rename each image so that folder details are in file name; move to main folder
 for image in images:
@@ -21,7 +22,7 @@ for image in images:
 
 # create one directory per band and move images into them
 for n in range(1,6):
-	subprocess.call('mkdir %s/band%s' %(path, n), shell=True)
-	subprocess.call('mv %s/refl/*_%s.tif band%s/' %(path,n,n), shell=True)
+	subprocess.call('mkdir %s/band%s' %(path_in, n), shell=True)
+	subprocess.call('mv %s/refl/*_%s.tif band%s/' %(path_in,n,n), shell=True)
 
 
