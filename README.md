@@ -89,6 +89,8 @@ The panel calibration values for the panel used in the MicaSense example data ar
 
 Note in this example that only the pre-flight reflectance panel images are available, so we will use them twice in order to imitate panels being available pre- and post-flight.
 
+    source activate micasense
+    export PYTHONPATH=$PYTHONPATH:~/scripts/micasense_calibration/:~/scripts/micasense-imageprocessing/
     export PATH=$PATH:path/to/this/repository
     cd path/to/micasense/imageprocessing/data
     mkdir raw
@@ -100,6 +102,13 @@ Note in this example that only the pre-flight reflectance panel images are avail
 (N.b. the `.` signifies 'the current working directory').
 
 This will result in reflectance images being written to `./refl/*`.
+
+
+## Future improvements
+
+Get calc_rad2refl to automatically find panel images using earliest and latest capture times.
+
+
 
 
 
