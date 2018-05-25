@@ -135,7 +135,7 @@ def radrefl_factor(panel_cal, image_name=None, plot_steps=False,
 	panelRegion = radianceImage[uly:lry, ulx:lrx]
 	meanRadiance = panelRegion.mean()
 	print('Mean Radiance in panel region: {:1.3f} W/m^2/nm/sr'.format(meanRadiance))
-	panelReflectance = panel_cal[bandName]
+	panelReflectance = panel_cal.loc[bandName].factor
 	radianceToReflectance = panelReflectance / meanRadiance
 	print('Radiance to reflectance conversion factor: {:1.3f}'.format(radianceToReflectance))
 
@@ -173,7 +173,7 @@ def load_panel_factors(panel_cal_fn):
 	"""
 	Load reflectance panel calibration data.
 
-	Expects a CSV file with columns 'band' and 'factor', and rows named using 
+	Expects a CSV file with columns 'band_number', 'band_name' and 'factor', and rows named using 
 	the RedEdge camera bands written into image metadata.
 
 	:param panel_cal_fn: File path and name of CSV file to load.
@@ -183,7 +183,7 @@ def load_panel_factors(panel_cal_fn):
 	:rtype: pd.Series
 	"""
 
-	panel_cal = pd.read_csv(panel_cal_fn, index_col='band').squeeze()
+	panel_cal = pd.read_csv(panel_cal_fn, index_col='band_name').squeeze()
 	panel_cal.name = panel_cal_fn
 	return panel_cal
 
