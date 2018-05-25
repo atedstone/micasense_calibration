@@ -22,7 +22,8 @@ for image in images:
 
 # create one directory per band and move images into them
 for n in range(1,6):
-	subprocess.call('mkdir %s/band%s' %(path_in, n), shell=True)
-	subprocess.call('mv %s/refl/*_%s.tif band%s/' %(path_in,n,n), shell=True)
+	subprocess.call('mkdir %s/refl/band%s' %(path_in, n), shell=True)
+	subprocess.call('mv %s/refl/*_%s.tif %s/refl/band%s/' %(path_in,n,path_in,n), shell=True)
+
 
 
